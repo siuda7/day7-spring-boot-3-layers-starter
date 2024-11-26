@@ -83,4 +83,23 @@ class EmployeeServiceTest {
         verify(mockedEmployeeRepository, never()).addEmployee(any());
 
     }
+
+    @Test
+    void should_create_employee_active_when_create_employee() {
+
+        //Given
+        //When
+        IEmployeeRepository mockedEmployeeRepository = mock(IEmployeeRepository.class);
+        Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
+
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        when(mockedEmployeeRepository.getAll()).thenReturn(List.of(new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0)));
+
+        employeeService.creat(lucy);
+
+        //Then
+        verify(mockedEmployeeRepository).addEmployee(argThat(argument -> lucy.getActive()));
+
+
+    }
 }
