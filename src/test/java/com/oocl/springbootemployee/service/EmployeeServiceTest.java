@@ -6,6 +6,7 @@ import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
 import com.oocl.springbootemployee.repository.IEmployeeRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class EmployeeServiceTest {
+
     @Test
     void should_return_the_given_employees_when_getAllEmployees() {
         //given
