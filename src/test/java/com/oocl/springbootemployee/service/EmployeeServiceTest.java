@@ -63,4 +63,23 @@ class EmployeeServiceTest {
         assertNull(createdEmployee);
 
     }
+
+    @Test
+    void should_return_null_when_create_given_employee_age_more_than_65_age() {
+
+        //Given
+        IEmployeeRepository mockedEmployeeRepository = mock(IEmployeeRepository.class);
+
+        Employee kitty = new Employee(1, "Kitty", 68, Gender.FEMALE, 8000.0);
+        when(mockedEmployeeRepository.addEmployee(any())).thenReturn(kitty);
+
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
+        //When
+        Employee createdEmployee = employeeService.creat(kitty);
+
+        //Then
+        assertNull(createdEmployee);
+
+    }
 }
