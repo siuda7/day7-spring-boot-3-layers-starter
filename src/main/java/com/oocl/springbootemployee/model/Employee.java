@@ -6,7 +6,7 @@ public class Employee {
     private Integer age;
     private Gender gender;
     private Double salary;
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     public Employee(Integer id, String name, Integer age, Gender gender, Double salary) {
 

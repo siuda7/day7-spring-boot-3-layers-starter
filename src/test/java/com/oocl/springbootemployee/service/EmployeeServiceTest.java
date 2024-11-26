@@ -1,12 +1,11 @@
 package com.oocl.springbootemployee.service;
 
-import com.oocl.springbootemployee.EmployeeAgeNotValidException;
+import com.oocl.springbootemployee.exception.EmployeeAgeNotValidException;
+import com.oocl.springbootemployee.exception.EmployeeNotFoundException;
 import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
-import com.oocl.springbootemployee.repository.EmployeeRepository;
 import com.oocl.springbootemployee.repository.IEmployeeRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.util.List;
 
@@ -66,7 +65,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_null_when_create_given_employee_age_more_than_65_age() {
+    void should_throw_age_not_valid_exception_when_create_given_employee_age_more_than_65_age() {
 
         //Given
         IEmployeeRepository mockedEmployeeRepository = mock(IEmployeeRepository.class);
@@ -100,6 +99,26 @@ class EmployeeServiceTest {
         //Then
         verify(mockedEmployeeRepository).addEmployee(argThat(argument -> lucy.getActive()));
 
+    }
+
+    @Test
+    void should_throw_employee_not_found_exception_when_update_given_inactive_employee() {
+
+        //Given
+        IEmployeeRepository mockedEmployeeRepository = mock(IEmployeeRepository.class);
+
+        Employee inactiveEmployee = new Employee(1, "Kitty", 68, Gender.FEMALE, 8000.0);
+        inactiveEmployee.setActive(false);
+
+        when(mockedEmployeeRepository.getEmployeeById(1)).thenReturn(inactiveEmployee);
+
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
+        //When
+        //Then
+        assertThrows(EmployeeNotFoundException.class, () -> employeeService.update(1, inactiveEmployee));
+
+        verify(mockedEmployeeRepository, never()).updateEmployee(any(), any());
 
     }
 }
