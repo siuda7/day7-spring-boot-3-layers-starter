@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -42,5 +43,24 @@ class EmployeeServiceTest {
 
         //then
         assertEquals("Lucy", createdEmployee.getName());
+    }
+
+    @Test
+    void should_return_null_when_create_given_employee_age_less_than_18_age() {
+
+        //Given
+        IEmployeeRepository mockedEmployeeRepository = mock(IEmployeeRepository.class);
+
+        Employee kitty = new Employee(1, "Kitty", 15, Gender.FEMALE, 8000.0);
+        when(mockedEmployeeRepository.addEmployee(any())).thenReturn(kitty);
+
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
+        //When
+        Employee createdEmployee = employeeService.creat(kitty);
+
+        //Then
+        assertNull(createdEmployee);
+
     }
 }

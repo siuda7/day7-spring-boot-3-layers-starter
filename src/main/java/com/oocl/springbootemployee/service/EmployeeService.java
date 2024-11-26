@@ -18,6 +18,7 @@ public class EmployeeService {
     }
 
     public Employee creat(Employee employee) {
+        if (employee.getAge() < 18) return null;
         return employeeRepository.addEmployee(employee);
     }
 
