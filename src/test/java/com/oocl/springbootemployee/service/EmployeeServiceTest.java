@@ -106,14 +106,11 @@ class EmployeeServiceTest {
 
         //Given
         IEmployeeRepository mockedEmployeeRepository = mock(IEmployeeRepository.class);
-
         Employee inactiveEmployee = new Employee(1, "Kitty", 68, Gender.FEMALE, 8000.0);
         inactiveEmployee.setActive(false);
-
         when(mockedEmployeeRepository.getEmployeeById(1)).thenReturn(inactiveEmployee);
 
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-
         //When
         //Then
         assertThrows(EmployeeNotFoundException.class, () -> employeeService.update(1, inactiveEmployee));
